@@ -45,4 +45,25 @@ object CountryDataProvider
         Country("GH", "Ghana", "+233", "🇬🇭", "GHS", "Africa", "Accra", listOf("English")),
         Country("UG", "Uganda", "+256", "🇺🇬", "UGX", "Africa", "Kampala", listOf("English", "Swahili"))
     )
+
+
+    fun getAllCountries(): List<Country> = countries
+
+    fun getCountryByCode(code: String): Country? =
+        countries.find { it.code.equals(code, ignoreCase = true) }
+
+    fun getCountryByDialCode(dialCode: String): Country? =
+        countries.find { it.dialCode == dialCode }
+
+    fun searchCountries(query: String): List<Country> {
+        val lowerQuery = query.lowercase()
+        return countries.filter {
+            it.name.lowercase().contains(lowerQuery) ||
+                    it.code.lowercase().contains(lowerQuery) ||
+                    it.dialCode.contains(lowerQuery)
+        }
+    }
+
+    fun getCountriesByContinent(continent: String): List<Country> =
+        countries.filter { it.continent?.equals(continent, ignoreCase = true) == true }
 }
