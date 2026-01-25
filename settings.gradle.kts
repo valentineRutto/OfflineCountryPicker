@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "OfflineCountryPicker"
 include(":app")
- 
+include(":OfflineCountryPicker")
