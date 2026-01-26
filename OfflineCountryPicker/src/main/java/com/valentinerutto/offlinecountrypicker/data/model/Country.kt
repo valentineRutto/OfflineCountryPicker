@@ -1,7 +1,8 @@
 package com.valentinerutto.offlinecountrypicker.data.model
 
-import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 @Parcelize
 data class Country(
     val code: String,           // ISO 3166-1 alpha-2 code (US, GB, etc)
@@ -19,13 +20,6 @@ data class Country(
     val displayDialCode: String
         get() = "$flag $dialCode"
 
-    override fun describeContents(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        TODO("Not yet implemented")
-    }
 }
 
 data class PhoneNumber(
