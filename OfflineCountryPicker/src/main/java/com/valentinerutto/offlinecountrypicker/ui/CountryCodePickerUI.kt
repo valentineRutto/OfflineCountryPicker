@@ -1,7 +1,5 @@
 package com.valentinerutto.offlinecountrypicker.ui
 
-import android.app.Dialog
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,7 +15,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -35,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -46,9 +44,6 @@ fun CountryCodePickerUI (
     onCountrySelected:(Country) -> Unit,
     modifier: Modifier = Modifier,
     repository: CountryRepository = remember { CountryRepository() }
-
-
-
 
 ){
     var showDialog by remember { mutableStateOf(false) }
@@ -220,4 +215,11 @@ fun PhoneNumberInput(
         }
     }
 }
+@Preview
+@Composable
+fun PreviewUI(){
 
+    CountryCodePickerUI(selectedCountry = Country("KE","Kenya","+254","🇰🇪","KES","Africa","Nairobi",listOf("English","Swahili")), onCountrySelected = {
+
+    })
+}
