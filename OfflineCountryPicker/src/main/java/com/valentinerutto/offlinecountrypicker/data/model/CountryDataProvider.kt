@@ -3,7 +3,7 @@ package com.valentinerutto.offlinecountrypicker.data.model
 object CountryDataProvider
 {
 
-    private val countries = listOf(
+     val countries = listOf(
         Country("US", "United States", "+1", "🇺🇸", "USD", "North America", "Washington D.C.", listOf("English")),
         Country("GB", "United Kingdom", "+44", "🇬🇧", "GBP", "Europe", "London", listOf("English")),
         Country("CA", "Canada", "+1", "🇨🇦", "CAD", "North America", "Ottawa", listOf("English", "French")),

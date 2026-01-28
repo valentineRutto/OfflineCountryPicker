@@ -36,18 +36,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.valentinerutto.offlinecountrypicker.data.model.CountryDataProvider
+import org.intellij.lang.annotations.Language
 
 
 @Composable
 fun CountryCodePickerUI (
-    selectedCountry: Country?,
+    selectedCountry: Country? = CountryDataProvider.getCountryByCode("KE"),
     onCountrySelected:(Country) -> Unit,
     modifier: Modifier = Modifier,
     repository: CountryRepository = remember { CountryRepository() }
 
 ){
     var showDialog by remember { mutableStateOf(false) }
-    val displayCountry = selectedCountry ?: repository.getCountryByCode("KE")
+    val displayCountry by remember { mutableStateOf(selectedCountry) }
 
     OutlinedButton(onClick = { showDialog = true }, modifier = modifier, shape = RoundedCornerShape(8.dp)) {
      displayCountry?.let {
@@ -135,32 +137,58 @@ var query by remember { mutableStateOf("") }
 @Composable
 fun CountryListItem(
     country: Country,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    showDialCode: Boolean = true,
+    showFlag: Boolean = true,
+    showContinet: Boolean = true,
+    showLanguage: Boolean = true,
+    showCurrency: Boolean = true,
+    showCapital: Boolean = true,
+    showISO: Boolean = true,
+    itemPadding:Int = 10,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(vertical = 12.dp, horizontal = 8.dp),
+            .padding(itemPadding.dp, (itemPadding * 1.5).dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+
+        val countryString = if (showFlag && showISO){
+            "${country.flag} ${country.code}"
+
+        }else if (showFlag){
+            country.displayflag
+        }else if (showISO){
+            country.name + " " + country.code
+
+        }else{
+            country.name
+        }
+
+
         Text(
             text = country.flag,
             fontSize = 32.sp,
             modifier = Modifier.padding(end = 12.dp)
         )
+
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = country.name,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Medium
             )
+
             Text(
                 text = country.dialCode,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
+
+
     }
 }
 
@@ -219,7 +247,9 @@ fun PhoneNumberInput(
 @Composable
 fun PreviewUI(){
 
-    CountryCodePickerUI(selectedCountry = Country("KE","Kenya","+254","🇰🇪","KES","Africa","Nairobi",listOf("English","Swahili")), onCountrySelected = {
+//    CountryCodePickerUI(selectedCountry = Country("KE","Kenya","+254","🇰🇪","KES","Africa","Nairobi",listOf("English","Swahili")), onCountrySelected = {
+//
+//    })
 
-    })
+    CountryListItem(Country("KE", "Kenya", "+254", "🇰🇪", "KES", "Africa", "Nairobi", listOf("English", "Swahili")), onClick = { /*TODO*/ })
 }

@@ -18,7 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.valentinerutto.offlinecountrypicker.AuthScreen
 import com.valentinerutto.offlinecountrypicker.ui.PhoneNumberInput
 import com.valentinerutto.offlinecountrypicker.ui.theme.OfflineCountryPickerTheme
 
@@ -33,7 +32,7 @@ class MainActivity : ComponentActivity() {
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
-                    AuthScreen()
+                    //AuthScreen()
                 }
             }
         }
