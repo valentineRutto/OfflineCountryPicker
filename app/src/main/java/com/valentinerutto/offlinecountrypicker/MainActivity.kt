@@ -51,7 +51,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun AuthScreen() {
 
-    var selectedCountry by remember { mutableStateOf(CountryDataProvider.getAllCountries().first()) }
+    var selectedCountry by remember { mutableStateOf(CountryDataProvider.getCountryByCode("KE")) }
 
     var phoneNumber by remember { mutableStateOf("") }
 
@@ -66,8 +66,8 @@ fun AuthScreen() {
 
         Button(
             onClick = {
-                val fullNumber = "${selectedCountry.dialCode}$phoneNumber"
-                // Use fullNumber for authentication
+                val fullNumber = "${selectedCountry?.dialCode}$phoneNumber"
+
             }
         ) {
             Text("Continue")

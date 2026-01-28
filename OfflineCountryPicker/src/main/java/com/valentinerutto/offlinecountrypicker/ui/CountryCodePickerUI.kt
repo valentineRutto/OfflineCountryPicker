@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -30,6 +31,7 @@ import com.valentinerutto.offlinecountrypicker.data.model.Country
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.valentinerutto.offlinecountrypicker.data.model.CountryDataProvider
-import org.intellij.lang.annotations.Language
+import com.valentinerutto.offlinecountrypickerLibray.R
 
 
 @Composable
@@ -56,8 +58,7 @@ fun CountryCodePickerUI (
      Text(text = it.flag , fontSize = 24.sp, modifier = Modifier.padding(end = 4.dp))
         Text(text = it.dialCode )
 
-      //  Icon(contentDescription = "Select Country")
-
+        // Icon(imageVector = , contentDescription = "Search")
     }
     }
 
@@ -97,7 +98,9 @@ var query by remember { mutableStateOf("") }
             repository.searchCountries(query)
         }
     }
+
     Dialog(onDismissRequest = onDismiss ) {
+
         Surface(shape = RoundedCornerShape(16.dp),
             color = MaterialTheme.colorScheme.surface,
             modifier = Modifier.fillMaxWidth().fillMaxHeight(0.8f)) {
@@ -114,8 +117,12 @@ var query by remember { mutableStateOf("") }
                     onValueChange = { query = it },
                     modifier = Modifier.fillMaxWidth(),
                     placeholder = { Text("Search countries...") },
-                    leadingIcon = { },
-                    singleLine = true
+                    leadingIcon = {
+                        //Icon(painter = painterResource(), contentDescription = null)
+                                  },
+                    trailingIcon = {                        //Icon(painter = painterResource(), contentDescription = null)
+                    },
+                        singleLine = true
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
