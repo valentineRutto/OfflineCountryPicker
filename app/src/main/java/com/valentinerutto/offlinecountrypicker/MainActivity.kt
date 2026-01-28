@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.valentinerutto.offlinecountrypicker.data.model.CountryDataProvider
 import com.valentinerutto.offlinecountrypicker.ui.PhoneNumberInput
 import com.valentinerutto.offlinecountrypicker.ui.theme.OfflineCountryPickerTheme
 
@@ -32,7 +33,7 @@ class MainActivity : ComponentActivity() {
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
-                    //AuthScreen()
+                    AuthScreen()
                 }
             }
         }
@@ -46,10 +47,11 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         modifier = modifier
     )
 }
+
 @Composable
 fun AuthScreen() {
 
-    var selectedCountry by remember { mutableStateOf(OfflineCountryPicker.getAllCountries().first()) }
+    var selectedCountry by remember { mutableStateOf(CountryDataProvider.getAllCountries().first()) }
 
     var phoneNumber by remember { mutableStateOf("") }
 

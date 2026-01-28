@@ -3,11 +3,11 @@ import org.gradle.kotlin.dsl.support.kotlinCompilerOptions
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
-
     alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
+
     namespace = "com.valentinerutto.offlinecountrypicker"
     compileSdk {
         version = release(36)
@@ -32,6 +32,8 @@ android {
             )
         }
     }
+
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
