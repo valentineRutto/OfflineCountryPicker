@@ -14,6 +14,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -58,7 +60,7 @@ fun CountryCodePickerUI (
      Text(text = it.flag , fontSize = 24.sp, modifier = Modifier.padding(end = 4.dp))
         Text(text = it.dialCode )
 
-        // Icon(imageVector = , contentDescription = "Search")
+         Icon(imageVector = Icons.Default.Search , contentDescription = "Search")
     }
     }
 
@@ -118,9 +120,10 @@ var query by remember { mutableStateOf("") }
                     modifier = Modifier.fillMaxWidth(),
                     placeholder = { Text("Search countries...") },
                     leadingIcon = {
-                        //Icon(painter = painterResource(), contentDescription = null)
-                                  },
-                    trailingIcon = {                        //Icon(painter = painterResource(), contentDescription = null)
+                        Icon(imageVector = Icons.Default.Search, contentDescription = null)
+
+                    },
+                    trailingIcon = {
                     },
                         singleLine = true
                 )
