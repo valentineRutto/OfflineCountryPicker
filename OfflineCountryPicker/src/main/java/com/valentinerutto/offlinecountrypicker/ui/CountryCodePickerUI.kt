@@ -218,10 +218,11 @@ fun PhoneNumberInput(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            CountryCodePickerUI(
-                selectedCountry = selectedCountry,
-                onCountrySelected = onCountrySelected,
-                modifier = Modifier.width(120.dp)
+
+      CountryPickerScreen( onCountrySelected = onCountrySelected, onDismiss = {}, showRecentlyUsed = true, recentlyUsedCountries = CountryDataProvider.getAllCountries().take(3))
+            Spacer(
+                modifier = Modifier
+                    .width(1.dp)
             )
 
             OutlinedTextField(
