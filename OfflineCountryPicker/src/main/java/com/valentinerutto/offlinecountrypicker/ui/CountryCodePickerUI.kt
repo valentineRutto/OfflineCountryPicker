@@ -218,8 +218,11 @@ fun PhoneNumberInput(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+           // CountryCodePickerUI(selectedCountry,onCountrySelected)
+      //CountryPickerScreen( onCountrySelected = onCountrySelected, onDismiss = {}, showRecentlyUsed = true, recentlyUsedCountries = CountryDataProvider.getAllCountries().take(3))
 
-      CountryPickerScreen( onCountrySelected = onCountrySelected, onDismiss = {}, showRecentlyUsed = true, recentlyUsedCountries = CountryDataProvider.getAllCountries().take(3))
+            showpickerexample()
+
             Spacer(
                 modifier = Modifier
                     .width(1.dp)
@@ -245,6 +248,7 @@ fun PhoneNumberInput(
         }
 
         if (selectedCountry != null && phoneNumber.isNotEmpty()) {
+
             Text(
                 text = "Full number: ${selectedCountry.dialCode}$phoneNumber",
                 style = MaterialTheme.typography.bodySmall,
@@ -254,6 +258,7 @@ fun PhoneNumberInput(
         }
     }
 }
+
 @Preview
 @Composable
 fun PreviewUI(){
@@ -261,6 +266,5 @@ fun PreviewUI(){
 //    CountryCodePickerUI(selectedCountry = Country("KE","Kenya","+254","🇰🇪","KES","Africa","Nairobi",listOf("English","Swahili")), onCountrySelected = {
 //
 //    })
-
     CountryListItem(Country("KE", "Kenya", "+254", "🇰🇪", "KES", "Africa", "Nairobi", listOf("English", "Swahili")), onClick = { /*TODO*/ })
 }
