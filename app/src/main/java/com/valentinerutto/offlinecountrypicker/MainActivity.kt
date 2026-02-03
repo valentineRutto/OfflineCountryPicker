@@ -56,6 +56,7 @@ fun AuthScreen() {
     var phoneNumber by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.padding(16.dp)) {
+
         PhoneNumberInput(
             phoneNumber = phoneNumber,
             onPhoneNumberChange = { phoneNumber = it },

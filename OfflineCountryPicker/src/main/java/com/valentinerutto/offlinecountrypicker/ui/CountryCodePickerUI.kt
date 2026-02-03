@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -44,6 +45,7 @@ import com.valentinerutto.offlinecountrypicker.data.model.CountryDataProvider
 import com.valentinerutto.offlinecountrypickerLibray.R
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CountryCodePickerUI (
     selectedCountry: Country? = CountryDataProvider.getCountryByCode("KE"),
@@ -53,9 +55,17 @@ fun CountryCodePickerUI (
 
 ){
     var showDialog by remember { mutableStateOf(false) }
-    val displayCountry by remember { mutableStateOf(selectedCountry) }
+    var showCountryPicker by remember { mutableStateOf(false) }
+    var displayCountry by remember { mutableStateOf(selectedCountry) }
+    var selectedCountry by remember { mutableStateOf<Country?>(null) }
 
-    OutlinedButton(onClick = { showDialog = true }, modifier = modifier, shape = RoundedCornerShape(8.dp)) {
+    var recentCountries by remember {
+        mutableStateOf(CountryDataProvider.countries.take(3))
+    }
+
+    OutlinedButton(onClick = {// showDialog = true
+                             showCountryPicker = true
+                             }, modifier = modifier, shape = RoundedCornerShape(8.dp)) {
      displayCountry?.let {
      Text(text = it.flag , fontSize = 24.sp, modifier = Modifier.padding(end = 4.dp))
         Text(text = it.dialCode )
@@ -64,15 +74,36 @@ fun CountryCodePickerUI (
     }
     }
 
-    if (showDialog){
-        CountryPickerDialog(
-            onDismiss = { showDialog = false },
-            onCountrySelected = {
-                onCountrySelected(it)
-                showDialog = false
-            },
-            repository = repository
-        )
+    if (showCountryPicker){
+
+        ModalBottomSheet(
+            onDismissRequest = { showCountryPicker = false },
+            containerColor = MaterialTheme.colorScheme.surface
+        ) {
+            CountryPickerScreen(
+                onCountrySelected = { country ->
+                    displayCountry = country
+
+                    // Update recently used countries
+                    recentCountries = (listOf(country) + recentCountries)
+                        .distinctBy { it.code }
+                        .take(3)
+
+                    showCountryPicker = false
+                },
+                onDismiss = { showCountryPicker = false },
+                recentlyUsedCountries = recentCountries,
+                showRecentlyUsed = true
+            )
+        }
+//        CountryPickerDialog(
+//            onDismiss = { showDialog = false },
+//            onCountrySelected = {
+//                onCountrySelected(it)
+//                showDialog = false
+//            },
+//            repository = repository
+//        )
 
     }
 
@@ -218,10 +249,10 @@ fun PhoneNumberInput(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-           // CountryCodePickerUI(selectedCountry,onCountrySelected)
+            CountryCodePickerUI(selectedCountry,onCountrySelected)
       //CountryPickerScreen( onCountrySelected = onCountrySelected, onDismiss = {}, showRecentlyUsed = true, recentlyUsedCountries = CountryDataProvider.getAllCountries().take(3))
 
-            showpickerexample()
+          //  showpickerexample()
 
             Spacer(
                 modifier = Modifier
