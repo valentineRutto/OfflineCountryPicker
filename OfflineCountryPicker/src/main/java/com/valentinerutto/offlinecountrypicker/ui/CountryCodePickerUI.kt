@@ -63,14 +63,15 @@ fun CountryCodePickerUI (
         mutableStateOf(CountryDataProvider.countries.take(3))
     }
 
-    OutlinedButton(onClick = {// showDialog = true
+    OutlinedButton(onClick = {
                              showCountryPicker = true
                              }, modifier = modifier, shape = RoundedCornerShape(8.dp)) {
      displayCountry?.let {
-     Text(text = it.flag , fontSize = 24.sp, modifier = Modifier.padding(end = 4.dp))
-        Text(text = it.dialCode )
 
-         Icon(imageVector = Icons.Default.Search , contentDescription = "Search")
+     Text(text = it.flag , fontSize = 24.sp, modifier = Modifier.padding(end = 4.dp))
+
+         Text(text = it.dialCode )
+
     }
     }
 
@@ -96,14 +97,7 @@ fun CountryCodePickerUI (
                 showRecentlyUsed = true
             )
         }
-//        CountryPickerDialog(
-//            onDismiss = { showDialog = false },
-//            onCountrySelected = {
-//                onCountrySelected(it)
-//                showDialog = false
-//            },
-//            repository = repository
-//        )
+
 
     }
 

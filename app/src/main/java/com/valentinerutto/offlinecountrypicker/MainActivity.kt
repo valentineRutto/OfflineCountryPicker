@@ -28,11 +28,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             OfflineCountryPickerTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
+                    Column(modifier = Modifier.padding(padding)) {
                     AuthScreen()
                 }
             }
@@ -81,4 +78,4 @@ fun GreetingPreview() {
     OfflineCountryPickerTheme {
         Greeting("Android")
     }
-}
+}}
