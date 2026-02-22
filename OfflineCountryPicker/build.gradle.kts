@@ -12,8 +12,15 @@ android {
     compileSdk {
         version = release(36)
     }
-
+    testFixtures {
+        enable = true
+    }
     defaultConfig {
+
+        aarMetadata {
+            minCompileSdk = 29
+        }
+
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

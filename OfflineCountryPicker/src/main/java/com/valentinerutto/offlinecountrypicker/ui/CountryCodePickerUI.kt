@@ -85,7 +85,6 @@ fun CountryCodePickerUI (
                 onCountrySelected = { country ->
                     displayCountry = country
 
-                    // Update recently used countries
                     recentCountries = (listOf(country) + recentCountries)
                         .distinctBy { it.code }
                         .take(3)
@@ -243,12 +242,12 @@ fun PhoneNumberInput(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+
             CountryCodePickerUI(selectedCountry,onCountrySelected)
       //CountryPickerScreen( onCountrySelected = onCountrySelected, onDismiss = {}, showRecentlyUsed = true, recentlyUsedCountries = CountryDataProvider.getAllCountries().take(3))
 
           //  showpickerexample()
-
-            Spacer(
+      Spacer(
                 modifier = Modifier
                     .width(1.dp)
             )
