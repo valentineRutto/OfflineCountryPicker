@@ -24,6 +24,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -34,6 +35,7 @@ import com.valentinerutto.offlinecountrypicker.data.model.Country
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -98,6 +100,15 @@ fun CountryCodePickerUI (
         }
 
 
+    }else{
+        CountryPickerDialog(  onDismiss = { showCountryPicker = false },onCountrySelected={country ->
+            displayCountry = country
+
+            showCountryPicker = false
+
+
+        }, repository = repository
+        )
     }
 
 
@@ -137,6 +148,15 @@ var query by remember { mutableStateOf("") }
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
+                    TextButton(onClick = onDismiss) {
+                        Text(
+                            text = "Cancel",
+                            fontSize = 17.sp,
+                            color = Color(0xFF007AFF)
+                        )
+                    }
+                Spacer(modifier = Modifier.height(8.dp))
+
 
                 OutlinedTextField(
                     value = query,
@@ -203,7 +223,7 @@ fun CountryListItem(
 
 
         Text(
-            text = country.flag,
+            text = countryString,
             fontSize = 32.sp,
             modifier = Modifier.padding(end = 12.dp)
         )
