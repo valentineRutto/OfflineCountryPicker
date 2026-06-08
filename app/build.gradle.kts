@@ -8,13 +8,13 @@ plugins {
 
 android {
 
-    namespace = "com.valentinerutto.offlinecountrypicker"
+    namespace = "com.valentinerutto.offlinecountrypicker.sample"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.valentinerutto.offlinecountrypicker"
+        applicationId = "com.valentinerutto.offlinecountrypicker.sample"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

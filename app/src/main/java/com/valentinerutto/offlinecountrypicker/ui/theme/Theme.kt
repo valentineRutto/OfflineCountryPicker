@@ -1,4 +1,4 @@
-package com.valentinerutto.offlinecountrypicker.ui.theme
+package com.valentinerutto.offlinecountrypicker.sample.ui.theme
 
 import android.app.Activity
 import android.os.Build

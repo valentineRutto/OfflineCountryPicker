@@ -1,4 +1,4 @@
-package com.valentinerutto.offlinecountrypicker
+package com.valentinerutto.offlinecountrypicker.sample
 
 import org.junit.Test
 

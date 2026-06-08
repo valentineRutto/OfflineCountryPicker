@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.valentinerutto.offlinecountrypicker.data.model.CountryDataProvider
-import com.valentinerutto.offlinecountrypickerLibray.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,10 +55,8 @@ fun CountryCodePickerUI (
     repository: CountryRepository = remember { CountryRepository() }
 
 ){
-    var showDialog by remember { mutableStateOf(false) }
     var showCountryPicker by remember { mutableStateOf(false) }
     var displayCountry by remember { mutableStateOf(selectedCountry) }
-    var selectedCountry by remember { mutableStateOf<Country?>(null) }
 
     var recentCountries by remember {
         mutableStateOf(CountryDataProvider.countries.take(3))
@@ -86,6 +83,7 @@ fun CountryCodePickerUI (
             CountryPickerScreen(
                 onCountrySelected = { country ->
                     displayCountry = country
+                    onCountrySelected(country)
 
                     recentCountries = (listOf(country) + recentCountries)
                         .distinctBy { it.code }
@@ -103,6 +101,7 @@ fun CountryCodePickerUI (
     }else{
         CountryPickerDialog(  onDismiss = { showCountryPicker = false },onCountrySelected={country ->
             displayCountry = country
+            onCountrySelected(country)
 
             showCountryPicker = false
 

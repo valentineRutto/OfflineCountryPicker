@@ -1,4 +1,4 @@
-package com.valentinerutto.offlinecountrypicker
+package com.valentinerutto.offlinecountrypicker.sample
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.valentinerutto.offlinecountrypicker.data.model.CountryDataProvider
 import com.valentinerutto.offlinecountrypicker.ui.PhoneNumberInput
-import com.valentinerutto.offlinecountrypicker.ui.theme.OfflineCountryPickerTheme
+import com.valentinerutto.offlinecountrypicker.sample.ui.theme.OfflineCountryPickerTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

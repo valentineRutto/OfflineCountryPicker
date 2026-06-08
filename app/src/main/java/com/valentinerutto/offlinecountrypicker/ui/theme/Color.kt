@@ -1,4 +1,4 @@
-package com.valentinerutto.offlinecountrypicker.ui.theme
+package com.valentinerutto.offlinecountrypicker.sample.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
