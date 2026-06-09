@@ -275,7 +275,7 @@ fun CountryDisplayText(
     flagFontSize: Int = 24
 ) {
     val options = displayOptions.ifEmpty {
-        CountryDisplayDefaults.FlagAndDialCode
+        CountryDisplayDefaults.FlagNameAndCurrency
     }
 
     Row(
