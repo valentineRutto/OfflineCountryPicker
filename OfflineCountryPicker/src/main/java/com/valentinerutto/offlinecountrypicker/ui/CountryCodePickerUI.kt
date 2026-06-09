@@ -135,8 +135,7 @@ fun CountryCodePickerUI(
         displayCountry?.let { country ->
             CountryDisplayText(
                 country = country,
-                displayOptions = selectedCountryDisplayOptions,
-                flagFontSize = 24
+                displayOptions = selectedCountryDisplayOptions
             )
         }
     }
@@ -261,7 +260,6 @@ fun CountryListItem(
         CountryDisplayText(
             country = country,
             displayOptions = displayOptions,
-            flagFontSize = 32,
             modifier = Modifier.weight(1f)
         )
     }
@@ -271,70 +269,60 @@ fun CountryListItem(
 fun CountryDisplayText(
     country: Country,
     displayOptions: Set<CountryDisplayOption>,
-    modifier: Modifier = Modifier,
-    flagFontSize: Int = 24
+    modifier: Modifier = Modifier
 ) {
     val options = displayOptions.ifEmpty {
         CountryDisplayDefaults.FlagNameAndCurrency
     }
 
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
-        verticalAlignment = Alignment.CenterVertically
+    val hasName = CountryDisplayOption.NAME in options
+    val primaryParts = buildList {
+        if (CountryDisplayOption.FLAG in options) add(country.flag)
+        if (hasName) add(country.name)
+        if (!hasName && CountryDisplayOption.CODE in options) add(country.code)
+        if (!hasName && CountryDisplayOption.DIAL_CODE in options) add(country.dialCode)
+        if (!hasName && CountryDisplayOption.CURRENCY in options) country.currency?.let(::add)
+    }
+    val detailParts = buildList {
+        if (hasName && CountryDisplayOption.CODE in options) add(country.code)
+        if (hasName && CountryDisplayOption.DIAL_CODE in options) add(country.dialCode)
+        if (hasName && CountryDisplayOption.CURRENCY in options) country.currency?.let(::add)
+        if (CountryDisplayOption.CAPITAL in options) country.capital?.let { add("Capital: $it") }
+    }
+    val languageText = if (CountryDisplayOption.LANGUAGES in options && !country.languages.isNullOrEmpty()) {
+        "Languages: ${country.languages.joinToString(", ")}"
+    } else {
+        null
+    }
+
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
-        if (CountryDisplayOption.FLAG in options) {
+        if (primaryParts.isNotEmpty()) {
             Text(
-                text = country.flag,
-                fontSize = flagFontSize.sp
-            )
-        }
-
-        if (CountryDisplayOption.CODE in options) {
-            Text(
-                text = country.code,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-
-        if (CountryDisplayOption.NAME in options) {
-            Text(
-                text = country.name,
+                text = primaryParts.joinToString(" "),
                 style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Medium
+                fontWeight = if (hasName) FontWeight.Medium else FontWeight.Normal,
+                softWrap = true
             )
         }
 
-        if (CountryDisplayOption.DIAL_CODE in options) {
+        if (detailParts.isNotEmpty()) {
             Text(
-                text = country.dialCode,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = detailParts.joinToString(" · "),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                softWrap = true
             )
         }
 
-        if (CountryDisplayOption.CURRENCY in options && country.currency != null) {
+        if (languageText != null) {
             Text(
-                text = country.currency,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-
-        if (CountryDisplayOption.LANGUAGES in options && !country.languages.isNullOrEmpty()) {
-            Text(
-                text = country.languages.joinToString(", "),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-
-        if (CountryDisplayOption.CAPITAL in options && country.capital != null) {
-            Text(
-                text = country.capital,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = languageText,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                softWrap = true
             )
         }
     }

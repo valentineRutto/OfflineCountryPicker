@@ -243,7 +243,6 @@ private fun CountryItem(
         CountryDisplayText(
             country = country,
             displayOptions = displayOptions,
-            flagFontSize = 32,
             modifier = Modifier.weight(1f)
         )
     }
