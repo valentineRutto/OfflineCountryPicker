@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -13,7 +12,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -28,12 +26,13 @@ fun CountryPickerScreen(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
     recentlyUsedCountries: List<Country> = emptyList(),
-    showRecentlyUsed: Boolean = true
+    showRecentlyUsed: Boolean = true,
+    itemDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.All,
+    countries: List<Country> = getAllCountries()
 ) {
     var searchQuery by remember { mutableStateOf("") }
-    val countries = remember { getAllCountries() }
 
-    val filteredCountries = remember(searchQuery) {
+    val filteredCountries = remember(countries, searchQuery) {
         if (searchQuery.isEmpty()) {
             countries
         } else {
@@ -121,7 +120,8 @@ fun CountryPickerScreen(
                             recentlyUsedCountries.forEachIndexed { index, country ->
                                 CountryItem(
                                     country = country,
-                                    onClick = { onCountrySelected(country) }
+                                    onClick = { onCountrySelected(country) },
+                                    displayOptions = itemDisplayOptions
                                 )
                                 if (index < recentlyUsedCountries.size - 1) {
                                     HorizontalDivider(
@@ -165,7 +165,8 @@ fun CountryPickerScreen(
                             countriesInGroup.forEachIndexed { index, country ->
                                 CountryItem(
                                     country = country,
-                                    onClick = { onCountrySelected(country) }
+                                    onClick = { onCountrySelected(country) },
+                                    displayOptions = itemDisplayOptions
                                 )
                                 if (index < countriesInGroup.size - 1) {
                                     HorizontalDivider(
@@ -223,7 +224,8 @@ private fun SearchBar(
 private fun CountryItem(
     country: Country,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    displayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.All
 ) {
     Row(
         modifier = modifier
@@ -232,30 +234,11 @@ private fun CountryItem(
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Flag
-        Text(
-            text = country.flag,
-            fontSize = 32.sp,
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-        )
-
-        Spacer(modifier = Modifier.width(12.dp))
-
-        // Country Name
-        Text(
-            text = country.name,
-            fontSize = 17.sp,
-            color = Color.Black,
+        CountryDisplayText(
+            country = country,
+            displayOptions = displayOptions,
+            flagFontSize = 32,
             modifier = Modifier.weight(1f)
-        )
-
-        // Dial Code
-        Text(
-            text = country.dialCode,
-            fontSize = 17.sp,
-            color = Color.Gray
         )
     }
 }
