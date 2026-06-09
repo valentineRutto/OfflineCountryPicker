@@ -46,8 +46,12 @@ import com.valentinerutto.offlinecountrypicker.data.model.CountryDataProvider
 
 enum class CountryDisplayOption {
     FLAG,
+    CODE,
     NAME,
-    DIAL_CODE
+    DIAL_CODE,
+    CURRENCY,
+    LANGUAGES,
+    CAPITAL
 }
 
 object CountryDisplayDefaults {
@@ -66,10 +70,38 @@ object CountryDisplayDefaults {
         CountryDisplayOption.DIAL_CODE
     )
 
-    val All = setOf(
+    val FlagNameAndCurrency = setOf(
         CountryDisplayOption.FLAG,
         CountryDisplayOption.NAME,
+        CountryDisplayOption.CURRENCY
+    )
+
+    val FlagNameCodeAndDialCode = setOf(
+        CountryDisplayOption.FLAG,
+        CountryDisplayOption.NAME,
+        CountryDisplayOption.CODE,
         CountryDisplayOption.DIAL_CODE
+    )
+
+    val NameAndCurrency = setOf(
+        CountryDisplayOption.NAME,
+        CountryDisplayOption.CURRENCY
+    )
+
+    val FlagDialCodeAndCurrency = setOf(
+        CountryDisplayOption.FLAG,
+        CountryDisplayOption.DIAL_CODE,
+        CountryDisplayOption.CURRENCY
+    )
+
+    val All = setOf(
+        CountryDisplayOption.FLAG,
+        CountryDisplayOption.CODE,
+        CountryDisplayOption.NAME,
+        CountryDisplayOption.DIAL_CODE,
+        CountryDisplayOption.CURRENCY,
+        CountryDisplayOption.LANGUAGES,
+        CountryDisplayOption.CAPITAL
     )
 }
 
@@ -80,6 +112,7 @@ fun CountryCodePickerUI(
     onCountrySelected: (Country) -> Unit,
     modifier: Modifier = Modifier,
     repository: CountryRepository = remember { CountryRepository() },
+    onCurrencySelected: ((String?) -> Unit)? = null,
     selectedCountryDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.FlagAndDialCode,
     pickerItemDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.All
 ) {
@@ -117,6 +150,7 @@ fun CountryCodePickerUI(
                 onCountrySelected = { country ->
                     displayCountry = country
                     onCountrySelected(country)
+                    onCurrencySelected?.invoke(country.currency)
 
                     recentCountries = (listOf(country) + recentCountries)
                         .distinctBy { it.code }
@@ -256,6 +290,14 @@ fun CountryDisplayText(
             )
         }
 
+        if (CountryDisplayOption.CODE in options) {
+            Text(
+                text = country.code,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
         if (CountryDisplayOption.NAME in options) {
             Text(
                 text = country.name,
@@ -267,6 +309,30 @@ fun CountryDisplayText(
         if (CountryDisplayOption.DIAL_CODE in options) {
             Text(
                 text = country.dialCode,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        if (CountryDisplayOption.CURRENCY in options && country.currency != null) {
+            Text(
+                text = country.currency,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        if (CountryDisplayOption.LANGUAGES in options && !country.languages.isNullOrEmpty()) {
+            Text(
+                text = country.languages.joinToString(", "),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        if (CountryDisplayOption.CAPITAL in options && country.capital != null) {
+            Text(
+                text = country.capital,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -284,6 +350,7 @@ fun PhoneNumberInput(
     label: String = "Phone Number",
     isError: Boolean = false,
     errorMessage: String? = null,
+    onCurrencySelected: ((String?) -> Unit)? = null,
     countryPickerDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.FlagAndDialCode,
     countryPickerItemDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.All
 ) {
@@ -296,6 +363,7 @@ fun PhoneNumberInput(
             CountryCodePickerUI(
                 selectedCountry = selectedCountry,
                 onCountrySelected = onCountrySelected,
+                onCurrencySelected = onCurrencySelected,
                 selectedCountryDisplayOptions = countryPickerDisplayOptions,
                 pickerItemDisplayOptions = countryPickerItemDisplayOptions
             )

@@ -60,7 +60,12 @@ object CountryDataProvider
         return countries.filter {
             it.name.lowercase().contains(lowerQuery) ||
                     it.code.lowercase().contains(lowerQuery) ||
-                    it.dialCode.contains(lowerQuery)
+                    it.dialCode.contains(lowerQuery) ||
+                    it.currency?.lowercase()?.contains(lowerQuery) == true ||
+                    it.capital?.lowercase()?.contains(lowerQuery) == true ||
+                    it.languages?.any { language ->
+                        language.lowercase().contains(lowerQuery)
+                    } == true
         }
     }
 

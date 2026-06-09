@@ -38,7 +38,13 @@ fun CountryPickerScreen(
         } else {
             countries.filter { country ->
                 country.name.contains(searchQuery, ignoreCase = true) ||
-                        country.dialCode.contains(searchQuery, ignoreCase = true)
+                        country.code.contains(searchQuery, ignoreCase = true) ||
+                        country.dialCode.contains(searchQuery, ignoreCase = true) ||
+                        country.currency?.contains(searchQuery, ignoreCase = true) == true ||
+                        country.capital?.contains(searchQuery, ignoreCase = true) == true ||
+                        country.languages?.any { language ->
+                            language.contains(searchQuery, ignoreCase = true)
+                        } == true
             }
         }
     }

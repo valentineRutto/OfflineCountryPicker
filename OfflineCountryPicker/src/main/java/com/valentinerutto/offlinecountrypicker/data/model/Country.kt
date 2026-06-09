@@ -19,8 +19,12 @@ data class Country(
 
     val displayDialCode: String
         get() = "$flag $dialCode"
-val displayflag:String
-    get() = "$code $name"
+
+    val displayCurrency: String
+        get() = currency ?: ""
+
+    val displayFlag: String
+        get() = "$code $name"
 }
 
 data class PhoneNumber(

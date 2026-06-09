@@ -57,6 +57,9 @@ fun CountryPickerSampleScreen(
     var selectedCountry by remember {
         mutableStateOf(CountryDataProvider.getCountryByCode("KE"))
     }
+    var selectedCurrency by remember {
+        mutableStateOf(selectedCountry?.currency)
+    }
     var phoneNumber by remember { mutableStateOf("") }
     var submittedNumber by remember { mutableStateOf<String?>(null) }
 
@@ -97,13 +100,15 @@ fun CountryPickerSampleScreen(
             selectedCountry = selectedCountry,
             onCountrySelected = {
                 selectedCountry = it
+                selectedCurrency = it.currency
                 submittedNumber = null
             },
             modifier = Modifier.fillMaxWidth(),
             label = "Phone number",
             isError = isPhoneNumberInvalid,
             errorMessage = "Enter 7 to 15 digits",
-            countryPickerDisplayOptions = CountryDisplayDefaults.NameAndDialCode,
+            onCurrencySelected = { selectedCurrency = it },
+            countryPickerDisplayOptions = CountryDisplayDefaults.FlagDialCodeAndCurrency,
             countryPickerItemDisplayOptions = CountryDisplayDefaults.All
         )
 
@@ -117,6 +122,7 @@ fun CountryPickerSampleScreen(
 
         SelectedCountryCard(
             country = selectedCountry,
+            currency = selectedCurrency,
             fullNumber = submittedNumber ?: fullNumber.takeIf { phoneNumber.isNotEmpty() }
         )
     }
@@ -125,6 +131,7 @@ fun CountryPickerSampleScreen(
 @Composable
 private fun SelectedCountryCard(
     country: Country?,
+    currency: String?,
     fullNumber: String?,
     modifier: Modifier = Modifier
 ) {
@@ -147,6 +154,30 @@ private fun SelectedCountryCard(
                     ?: "No country selected",
                 style = MaterialTheme.typography.bodyLarge
             )
+
+            if (currency != null) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Currency: $currency",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
+            country?.capital?.let { capital ->
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Capital: $capital",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+
+            if (!country?.languages.isNullOrEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Languages: ${country.languages?.joinToString(", ")}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
 
             if (fullNumber != null) {
                 Spacer(modifier = Modifier.height(8.dp))
