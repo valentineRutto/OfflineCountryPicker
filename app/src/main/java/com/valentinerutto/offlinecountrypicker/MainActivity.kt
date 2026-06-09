@@ -171,7 +171,7 @@ private fun DisplayOptionExample(
             modifier = Modifier.fillMaxWidth(),
             onCurrencySelected = onCurrencySelected,
             selectedCountryDisplayOptions = displayOptions,
-            pickerItemDisplayOptions = CountryDisplayDefaults.All
+            pickerItemDisplayOptions = displayOptions
         )
     }
 }
