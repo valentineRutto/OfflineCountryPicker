@@ -27,7 +27,7 @@ fun CountryPickerScreen(
     modifier: Modifier = Modifier,
     recentlyUsedCountries: List<Country> = emptyList(),
     showRecentlyUsed: Boolean = true,
-    itemDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.All,
+    itemDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.FlagNameCodeAndDialCode,
     countries: List<Country> = getAllCountries()
 ) {
     var searchQuery by remember { mutableStateOf("") }
@@ -231,7 +231,7 @@ private fun CountryItem(
     country: Country,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    displayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.All
+    displayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.FlagNameCodeAndDialCode
 ) {
     Row(
         modifier = modifier

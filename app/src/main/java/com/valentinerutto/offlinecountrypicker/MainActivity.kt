@@ -65,6 +65,34 @@ fun CountryPickerSampleScreen(
     val displayShowcases = remember {
         listOf(
             DisplayShowcase(
+                title = "Flag only",
+                options = CountryDisplayDefaults.Flag
+            ),
+            DisplayShowcase(
+                title = "Country code only",
+                options = CountryDisplayDefaults.Code
+            ),
+            DisplayShowcase(
+                title = "Country name only",
+                options = CountryDisplayDefaults.Name
+            ),
+            DisplayShowcase(
+                title = "Dial code only",
+                options = CountryDisplayDefaults.DialCode
+            ),
+            DisplayShowcase(
+                title = "Currency only",
+                options = CountryDisplayDefaults.Currency
+            ),
+            DisplayShowcase(
+                title = "Languages only",
+                options = CountryDisplayDefaults.Languages
+            ),
+            DisplayShowcase(
+                title = "Capital only",
+                options = CountryDisplayDefaults.Capital
+            ),
+            DisplayShowcase(
                 title = "Flag + dial code",
                 options = CountryDisplayDefaults.FlagAndDialCode
             ),
@@ -91,10 +119,6 @@ fun CountryPickerSampleScreen(
             DisplayShowcase(
                 title = "Flag + dial code + currency",
                 options = CountryDisplayDefaults.FlagDialCodeAndCurrency
-            ),
-            DisplayShowcase(
-                title = "All display options",
-                options = CountryDisplayDefaults.All
             )
         )
     }

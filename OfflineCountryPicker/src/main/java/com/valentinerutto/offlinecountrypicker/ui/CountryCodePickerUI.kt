@@ -55,6 +55,20 @@ enum class CountryDisplayOption {
 }
 
 object CountryDisplayDefaults {
+    val Flag = setOf(CountryDisplayOption.FLAG)
+
+    val Code = setOf(CountryDisplayOption.CODE)
+
+    val Name = setOf(CountryDisplayOption.NAME)
+
+    val DialCode = setOf(CountryDisplayOption.DIAL_CODE)
+
+    val Currency = setOf(CountryDisplayOption.CURRENCY)
+
+    val Languages = setOf(CountryDisplayOption.LANGUAGES)
+
+    val Capital = setOf(CountryDisplayOption.CAPITAL)
+
     val FlagAndDialCode = setOf(
         CountryDisplayOption.FLAG,
         CountryDisplayOption.DIAL_CODE
@@ -93,16 +107,6 @@ object CountryDisplayDefaults {
         CountryDisplayOption.DIAL_CODE,
         CountryDisplayOption.CURRENCY
     )
-
-    val All = setOf(
-        CountryDisplayOption.FLAG,
-        CountryDisplayOption.CODE,
-        CountryDisplayOption.NAME,
-        CountryDisplayOption.DIAL_CODE,
-        CountryDisplayOption.CURRENCY,
-        CountryDisplayOption.LANGUAGES,
-        CountryDisplayOption.CAPITAL
-    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -114,7 +118,7 @@ fun CountryCodePickerUI(
     repository: CountryRepository = remember { CountryRepository() },
     onCurrencySelected: ((String?) -> Unit)? = null,
     selectedCountryDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.FlagAndDialCode,
-    pickerItemDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.All
+    pickerItemDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.FlagNameCodeAndDialCode
 ) {
     var showCountryPicker by remember { mutableStateOf(false) }
     var displayCountry by remember { mutableStateOf(selectedCountry) }
@@ -173,7 +177,7 @@ fun CountryPickerDialog(
     onDismiss: () -> Unit,
     onCountrySelected: (Country) -> Unit,
     repository: CountryRepository,
-    itemDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.All
+    itemDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.FlagNameCodeAndDialCode
 ) {
 
 
@@ -247,7 +251,7 @@ var query by remember { mutableStateOf("") }
 fun CountryListItem(
     country: Country,
     onClick: () -> Unit,
-    displayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.All,
+    displayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.FlagNameCodeAndDialCode,
     itemPadding:Int = 10,
 ) {
     Row(
@@ -340,7 +344,7 @@ fun PhoneNumberInput(
     errorMessage: String? = null,
     onCurrencySelected: ((String?) -> Unit)? = null,
     countryPickerDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.FlagAndDialCode,
-    countryPickerItemDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.All
+    countryPickerItemDisplayOptions: Set<CountryDisplayOption> = CountryDisplayDefaults.FlagNameCodeAndDialCode
 ) {
     Column(modifier = modifier) {
         Row(
