@@ -52,39 +52,57 @@ CountryCodePickerUI(
 )
 ```
 
-## Maven Central Release Checklist
+## Display Customization
 
-1. Create or verify the `io.github.valentinerutto` namespace in Sonatype Central Portal.
-2. Generate a GPG key and publish its public key to a public keyserver.
-3. Provide signing credentials through environment variables or Gradle properties:
+Use `selectedCountryDisplayOptions` to control what appears in the closed picker button, and `pickerItemDisplayOptions` to control what appears in each country row inside the picker.
 
-```bash
-export SIGNING_KEY="$(gpg --armor --export-secret-keys 2205F5198516B77D37C364D0F9C4C2BDDB3F96DB)"
-export SIGNING_PASSWORD="your-key-password"
+```kotlin
+CountryCodePickerUI(
+    selectedCountry = selectedCountry,
+    onCountrySelected = { selectedCountry = it },
+    selectedCountryDisplayOptions = CountryDisplayDefaults.FlagAndDialCode,
+    pickerItemDisplayOptions = CountryDisplayDefaults.FlagNameCodeAndDialCode
+)
 ```
 
-Alternatively set `signingInMemoryKey` and `signingInMemoryKeyPassword` in a private `~/.gradle/gradle.properties` file:
+Available presets:
 
-```properties
-signingInMemoryKey=<output from: gpg --armor --export-secret-keys 2205F5198516B77D37C364D0F9C4C2BDDB3F96DB>
-signingInMemoryKeyPassword=your-key-password
+```kotlin
+CountryDisplayDefaults.Flag
+CountryDisplayDefaults.Code
+CountryDisplayDefaults.Name
+CountryDisplayDefaults.DialCode
+CountryDisplayDefaults.Currency
+CountryDisplayDefaults.Languages
+CountryDisplayDefaults.Capital
+CountryDisplayDefaults.FlagAndDialCode
+CountryDisplayDefaults.FlagAndName
+CountryDisplayDefaults.NameAndDialCode
+CountryDisplayDefaults.FlagNameAndCurrency
+CountryDisplayDefaults.FlagNameCodeAndDialCode
+CountryDisplayDefaults.NameAndCurrency
+CountryDisplayDefaults.FlagDialCodeAndCurrency
 ```
 
-Do not commit your signing key or passphrase.
+You can also pass your own set:
 
-4. Build the signed Central Portal bundle:
-
-```bash
-./gradlew :OfflineCountryPicker:bundleReleasePublicationForCentralPortal
+```kotlin
+CountryCodePickerUI(
+    selectedCountry = selectedCountry,
+    onCountrySelected = { selectedCountry = it },
+    selectedCountryDisplayOptions = setOf(
+        CountryDisplayOption.FLAG,
+        CountryDisplayOption.NAME
+    ),
+    pickerItemDisplayOptions = setOf(
+        CountryDisplayOption.FLAG,
+        CountryDisplayOption.NAME,
+        CountryDisplayOption.CODE,
+        CountryDisplayOption.DIAL_CODE,
+        CountryDisplayOption.CURRENCY
+    )
+)
 ```
-
-5. Upload the generated zip from:
-
-```text
-OfflineCountryPicker/build/central-portal-bundle/
-```
-
-6. Review validation results in Central Portal, then publish the deployment.
 
 ## License
 
