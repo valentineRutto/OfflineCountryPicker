@@ -245,7 +245,7 @@ fun CountryDisplayText(
     modifier: Modifier = Modifier
 ) {
     val options = displayOptions.ifEmpty {
-        CountryDisplayDefaults.FlagNameAndCurrency
+        CountryDisplayDefaults.FlagAndCode
     }
 
     val hasName = CountryDisplayOption.NAME in options
@@ -263,7 +263,7 @@ fun CountryDisplayText(
         if (CountryDisplayOption.CAPITAL in options) country.capital?.let { add("Capital: $it") }
     }
     val languageText = if (CountryDisplayOption.LANGUAGES in options && !country.languages.isNullOrEmpty()) {
-        "Languages: ${country.languages.joinToString(", ")}"
+        "${country.languages.joinToString(", ")}"
     } else {
         null
     }
