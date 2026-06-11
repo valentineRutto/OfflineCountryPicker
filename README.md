@@ -9,6 +9,12 @@ A Jetpack Compose country and phone code picker that works fully offline.
 - Configurable selected-country and picker-row display options.
 - Sources and Javadocs are generated for Maven Central publication.
 
+## UI Preview
+
+| Dialog picker | Dial code rows | Currency rows | Flag + currency | Flag + name |
+| --- | --- | --- | --- | --- |
+| <img src="docs/images/dialog-picker-preview.png" alt="Dialog country picker preview" width="160"> | <img src="docs/images/bottom-sheet-dial-code-preview.png" alt="Bottom sheet dial code picker preview" width="160"> | <img src="docs/images/bottom-sheet-currency-preview.png" alt="Bottom sheet currency picker preview" width="160"> | <img src="docs/images/bottom-sheet-flag-currency-preview.png" alt="Bottom sheet flag and currency picker preview" width="160"> | <img src="docs/images/bottom-sheet-flag-name-preview.png" alt="Bottom sheet flag and name picker preview" width="160"> |
+
 ## Installation
 
 ```kotlin
