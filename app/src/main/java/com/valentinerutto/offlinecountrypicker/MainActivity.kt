@@ -26,14 +26,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.valentinerutto.offlinecountrypicker.data.CountryRepository
 import com.valentinerutto.offlinecountrypicker.data.model.Country
 import com.valentinerutto.offlinecountrypicker.data.model.CountryDataProvider
 import com.valentinerutto.offlinecountrypicker.ui.CountryCodePickerUI
 import com.valentinerutto.offlinecountrypicker.ui.CountryDisplayDefaults
 import com.valentinerutto.offlinecountrypicker.ui.CountryDisplayOption
 import com.valentinerutto.offlinecountrypicker.sample.ui.theme.OfflineCountryPickerTheme
-import com.valentinerutto.offlinecountrypicker.ui.CountryPickerDialog
+import com.valentinerutto.offlinecountrypicker.ui.CountryPickerPresentation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -138,9 +137,23 @@ fun CountryPickerSampleScreen(
 
         item {
             Text(
-                text = "Standalone CountryCodePickerUI examples using each display option preset.",
+                text = "Standalone CountryCodePickerUI examples using bottom sheet and dialog presentations.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        item {
+            DisplayOptionExample(
+                title = "Dialog picker",
+                displayOptions = CountryDisplayDefaults.FlagNameCodeAndDialCode,
+                pickerPresentation = CountryPickerPresentation.DIALOG,
+                selectedCountry = selectedCountry,
+                onCountrySelected = {
+                    selectedCountry = it
+                    selectedCurrency = it.currency
+                },
+                onCurrencySelected = { selectedCurrency = it }
             )
         }
 
@@ -148,6 +161,7 @@ fun CountryPickerSampleScreen(
             DisplayOptionExample(
                 title = showcase.title,
                 displayOptions = showcase.options,
+                pickerPresentation = CountryPickerPresentation.MODAL_BOTTOM_SHEET,
                 selectedCountry = selectedCountry,
                 onCountrySelected = {
                     selectedCountry = it
@@ -175,6 +189,7 @@ private data class DisplayShowcase(
 private fun DisplayOptionExample(
     title: String,
     displayOptions: Set<CountryDisplayOption>,
+    pickerPresentation: CountryPickerPresentation,
     selectedCountry: Country?,
     onCountrySelected: (Country) -> Unit,
     onCurrencySelected: (String?) -> Unit,
@@ -195,7 +210,8 @@ private fun DisplayOptionExample(
             modifier = Modifier.fillMaxWidth(),
             onCurrencySelected = onCurrencySelected,
             selectedCountryDisplayOptions = displayOptions,
-            pickerItemDisplayOptions = displayOptions
+            pickerItemDisplayOptions = displayOptions,
+            pickerPresentation = pickerPresentation
         )
     }
 }
