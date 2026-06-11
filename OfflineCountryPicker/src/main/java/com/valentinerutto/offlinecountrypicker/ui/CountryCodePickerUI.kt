@@ -69,6 +69,8 @@ object CountryDisplayDefaults {
         CountryDisplayOption.FLAG,
         CountryDisplayOption.NAME
     )
+  val  FlagAndCode = setOf( CountryDisplayOption.FLAG,
+        CountryDisplayOption.CODE)
 
     val NameAndDialCode = setOf(
         CountryDisplayOption.NAME,

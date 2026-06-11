@@ -103,6 +103,10 @@ fun CountryPickerSampleScreen(
                 title = "Country name + dial code",
                 options = CountryDisplayDefaults.NameAndDialCode
             ),
+             DisplayShowcase(
+                title = "Country name + dial code",
+                options = CountryDisplayDefaults.FlagAndCode
+            ),
             DisplayShowcase(
                 title = "Flag + name + currency",
                 options = CountryDisplayDefaults.FlagNameAndCurrency
@@ -245,7 +249,7 @@ private fun SelectedCountryCard(
             if (currency != null) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Currency: $currency",
+                    text = "$currency",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -253,7 +257,7 @@ private fun SelectedCountryCard(
             country?.capital?.let { capital ->
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Capital: $capital",
+                    text = "$capital",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -261,7 +265,7 @@ private fun SelectedCountryCard(
             if (!country?.languages.isNullOrEmpty()) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Languages: ${country.languages?.joinToString(", ")}",
+                    text = "${country.languages?.joinToString(", ")}",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
