@@ -1,6 +1,6 @@
 # Offline Country Picker
 
-A Jetpack Compose country and phone code picker that works fully offline.
+A Jetpack Compose country code or name, currency, phone code , languages,currency and capitals picker that works fully offline.
 
 ## Features
 
