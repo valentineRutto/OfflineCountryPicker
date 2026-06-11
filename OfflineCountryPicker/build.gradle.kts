@@ -3,10 +3,13 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.parcelize)
     `maven-publish`
+    signing
 }
 
-group = "com.valentinerutto"
+group = "io.github.valentinerutto"
 version = "1.0.0"
+
+val centralPortalStagingDirectory = layout.buildDirectory.dir("central-portal-staging")
 
 android {
     namespace = "com.valentinerutto.offlinecountrypicker"
@@ -52,19 +55,12 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-
     api(platform(libs.androidx.compose.bom))
     api(libs.androidx.compose.ui)
     api(libs.androidx.compose.ui.graphics)
     api(libs.androidx.compose.ui.tooling.preview)
     api(libs.androidx.compose.material3)
     api(libs.androidx.compose.material.icons.extended)
-
-    implementation(libs.gson)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -78,7 +74,7 @@ dependencies {
 publishing {
     publications {
         register<MavenPublication>("release") {
-            groupId = "com.valentinerutto"
+            groupId = "io.github.valentinerutto"
             artifactId = "offline-country-picker"
             version = project.version.toString()
 
@@ -102,6 +98,7 @@ publishing {
                     developer {
                         id.set("valentinerutto")
                         name.set("Valentine Rutto")
+                        url.set("https://github.com/valentinerutto")
                     }
                 }
 
@@ -119,5 +116,45 @@ publishing {
             name = "localBuild"
             url = uri(layout.buildDirectory.dir("repo"))
         }
+        maven {
+            name = "centralPortalStaging"
+            url = uri(centralPortalStagingDirectory)
+        }
     }
+}
+
+signing {
+    val signingKey = providers.gradleProperty("signingInMemoryKey")
+        .orElse(providers.environmentVariable("SIGNING_KEY"))
+        .orNull
+    val signingPassword = providers.gradleProperty("signingInMemoryKeyPassword")
+        .orElse(providers.environmentVariable("SIGNING_PASSWORD"))
+        .orNull
+
+    isRequired = gradle.startParameter.taskNames.any { taskName ->
+        taskName.contains("CentralPortal", ignoreCase = true)
+    }
+
+    if (!signingKey.isNullOrBlank()) {
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
+
+    sign(publishing.publications)
+}
+
+tasks.register<Zip>("bundleReleasePublicationForCentralPortal") {
+    group = "publishing"
+    description = "Publishes the release artifact to a signed local staging repository and zips it for Central Portal upload."
+    dependsOn("publishReleasePublicationToCentralPortalStagingRepository")
+    from(centralPortalStagingDirectory)
+    archiveFileName.set("${project.name}-${project.version}-central-portal.zip")
+    destinationDirectory.set(layout.buildDirectory.dir("central-portal-bundle"))
+}
+
+val cleanCentralPortalStaging by tasks.registering(Delete::class) {
+    delete(centralPortalStagingDirectory, layout.buildDirectory.dir("central-portal-bundle"))
+}
+
+tasks.named("publishReleasePublicationToCentralPortalStagingRepository") {
+    dependsOn(cleanCentralPortalStaging)
 }
