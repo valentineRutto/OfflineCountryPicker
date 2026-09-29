@@ -1,7 +1,5 @@
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.valentinerutto/offline-country-picker)](https://central.sonatype.com/artifact/io.github.valentinerutto/offline-country-picker)
-
-[![GitHub stars](https://img.shields.io/github/stars/valentineRutto/OfflineCountryPicker?style=social)](https://github.com/valentineRutto/OfflineCountryPicker)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.valentinerutto/offline-country-picker)](https://central.sonatype.com/artifact/io.github.valentinerutto/offline-country-picker)   [![GitHub stars](https://img.shields.io/github/stars/valentineRutto/OfflineCountryPicker?style=social)](https://github.com/valentineRutto/OfflineCountryPicker)
 
 A Jetpack Compose country code or name, currency, phone code, languages, currency and capitals picker that works fully offline.
 # Offline Country Picker
